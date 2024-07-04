@@ -1,7 +1,7 @@
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
-from langchain_openai import ChatOpenAI
+from langchain_groq import ChatGroq
 from ecommbot.ingest import ingestdata
 
 
@@ -26,7 +26,10 @@ def generation(vstore):
 
     prompt = ChatPromptTemplate.from_template(PRODUCT_BOT_TEMPLATE)
 
-    llm = ChatOpenAI()
+    llm = ChatGroq(
+            temperature=0,
+            model="llama3-70b-8192",
+            )
 
     chain = (
         {"context": retriever, "question": RunnablePassthrough()}
